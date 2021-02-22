@@ -1,0 +1,34 @@
+{
+  "name": "integrador-freso",
+  "version": "0.0.0",
+  "description": "integrador-freso",
+  "main": "server/server.js",
+  "scripts": {
+    "start:dev": "nodemon -r dotenv/config server/server.js",
+    "test": "node -r dotenv/config ./node_modules/jest/bin/jest.js --env node --watch --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
+    "test:verbose": "node -r dotenv/config ./node_modules/jest/bin/jest.js --env node --detectOpenHandles --watch",
+    "test:ci": "npm test -- --coverage",
+    "migrate:latest": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest",
+    "migrate:rollback": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fast-glob": "^3.2.5",
+    "helmet": "^4.4.1",
+    "knex": "^0.21.17",
+    "knex-stringcase": "^1.4.5",
+    "mssql": "^6.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "dotenv": "^8.2.0",
+    "jest": "^26.6.3",
+    "standard": "^16.0.3",
+    "supertest": "^6.1.3"
+  }
+}
