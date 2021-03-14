@@ -4,7 +4,7 @@ const loginService = require('../service/loginService')
 
 router.post('/login', async (req, res) => {
   try {
-    const body = req.body
+    const body = { ...req.body, ip: req.ip }
     const token = await loginService.login(body)
     res.status(200).json({ token })
   } catch (error) {

@@ -5,7 +5,7 @@ module.exports = {
               AFTER UPDATE
               AS
                   BEGIN
-                      UPDATE dbo.${table} SET updated_at = SYSDATETIME()
+                      UPDATE dbo.${table} SET updated_at = SYSUTCDATETIME()
                       FROM Inserted i
                       WHERE ${table}.${key} = i.${key}
                   END`

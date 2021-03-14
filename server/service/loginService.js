@@ -8,8 +8,11 @@ exports.login = async (data) => {
 
   if (!user || user.password !== data.password) { throw new Error('Invalid credentials') }
 
-  const createDate = moment().format()
-  const expirateDate = moment(createDate).add(3, 'hours').format()
+  const createDate = moment.utc().format()
+  const expirateDate = moment.utc(createDate).add(3, 'hours').format()
+
+  console.log(createDate)
+  console.log(expirateDate)
 
   const tokenData = {
     userId: user.id,

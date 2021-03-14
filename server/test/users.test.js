@@ -4,7 +4,6 @@ const request = require('supertest')
 const app = require('../infra/app')
 const database = require('../infra/database')
 const usersService = require('../service/usersService')
-const loginService = require('../service/loginService')
 
 const generate = () => {
   return crypto.randomBytes(10).toString('hex')
@@ -91,16 +90,6 @@ describe('Users endpoint', () => {
 
     expect(response.statusCode).toBe(200)
     expect(users.body).toHaveLength(1)
-  })
-
-  test.only('should return unauthorized if a valid token was not send', async () => {
-    const data = { username: generate(), password: generate() }
-    await usersService.save(data)
-    await loginService.login(data)
-
-    const response = await request(app).get('/users').set('Authorization', 'fakeToken')
-
-    expect(response.statusCode).toBe(401)
   })
 
   // test('should return error if get users fail for any reason', async () => {

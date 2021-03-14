@@ -1,3 +1,4 @@
+const moment = require('moment')
 const { onUpdate } = require('../triggers')
 
 exports.up = function (knex) {
@@ -9,7 +10,8 @@ exports.up = function (knex) {
     table.string('last_name')
     table.string('email')
     table.string('phone_number')
-    table.timestamps(false, true)
+    table.timestamp('created_at').defaultTo(moment.utc().format())
+    table.timestamp('updated_at').defaultTo(moment.utc().format())
   }).then(() => {
     return knex.raw(onUpdate('user_app', 'id'))
   })
