@@ -4,7 +4,6 @@ const request = require('supertest')
 const app = require('../infra/app')
 const database = require('../infra/database')
 const usersService = require('../service/usersService')
-// const userData = require('../data/usersData')
 
 const generate = () => {
   return crypto.randomBytes(10).toString('hex')
@@ -42,6 +41,14 @@ describe('Users endpoint', () => {
 
     expect(response.statusCode).toBe(200)
     expect(response.body.id).toBe(id)
+  })
+
+  test('should get a user by username', async () => {
+    const data = { username: generate(), password: generate() }
+    const { id } = await usersService.save(data)
+
+    const user = await usersService.getByUsername(data.username)
+    expect(user.id).toBe(id)
   })
 
   test('should save a user', async () => {
@@ -83,13 +90,20 @@ describe('Users endpoint', () => {
     expect(users.body).toHaveLength(1)
   })
 
-  test.only('should return error if get users fail for any reason', async () => {
-    jest.spyOn(database, 'select').mockRejectedValue(() => Promise.rejects())
+  // test('should return error if get users fail for any reason', async () => {
+  // const selectMock = jest.spyOn(database, 'select')
 
-    const response = request(app).get('/users')
+  // selectMock.mockReturnValue(new Error('Internal Server Error'))
 
-    await expect(response).rejects.toThrow()
-    // expect(response.statusCode).toBe(500)
-    // expect(response.body).toEqual({ error: 'Internal Server Error' })
-  })
+  // // const response = await request(app).get('/users')
+
+  // // expect(response.statusCode).toBe(200)
+  // // expect(response.body).toEqual({ error: 'Internal Server Error' })
+
+  // const teste = await database('userApp').select()
+  // console.log(teste)
+  // expect(teste).toEqual('Internal Server Error')
+
+  // selectMock.mockRestore()
+  // })
 })

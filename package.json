@@ -4,12 +4,11 @@
   "description": "integrador-freso",
   "main": "server/server.js",
   "scripts": {
-    "start:dev": "nodemon -r dotenv/config server/server.js",
-    "test": "node -r dotenv/config ./node_modules/jest/bin/jest.js --env node --watch --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
-    "test:verbose": "node -r dotenv/config ./node_modules/jest/bin/jest.js --env node --detectOpenHandles --watch",
+    "start:dev": "nodemon -r dotenv/config server/server.js dotenv_config_path=.env.dev",
+    "test": "set DOTENV_CONFIG_PATH=.env.test&&node -r dotenv/config ./node_modules/jest/bin/jest.js --env node --watch --detectOpenHandles --noStackTrace --runInBand --passWithNoTests --silent",
+    "test:verbose": "set DOTENV_CONFIG_PATH=.env.test&&node -r dotenv/config ./node_modules/jest/bin/jest.js --env node --watch --detectOpenHandles --noStackTrace --runInBand",
     "test:ci": "npm test -- --coverage",
-    "migrate:latest": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest",
-    "migrate:rollback": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback"
+    "knex:dev": "set DOTENV_CONFIG_PATH=.env.dev&&node -r dotenv/config ./node_modules/knex/bin/cli.js"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +21,9 @@
     "helmet": "^4.4.1",
     "knex": "^0.21.17",
     "knex-stringcase": "^1.4.5",
-    "mssql": "^6.3.1"
+    "moment": "^2.29.1",
+    "mssql": "^6.3.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
