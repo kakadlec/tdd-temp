@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const usersService = require('../service/usersService')
+const authService = require('../service/authService')
 
-router.get('/users', async (req, res) => {
+router.get('/users', authService, async (req, res) => {
   try {
     const users = await usersService.get()
     res.status(200).json(users)
